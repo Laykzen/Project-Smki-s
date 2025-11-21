@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMK Islam Krembung - Website Resmi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --admin-color: #e74c3c;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #1e7e34;
+            --secondary-color: #155724;
+            --accent-color: #007bff;
+            --text-color: #f8f9fa;
+            --light-bg: #212529;
+            --white: #343a40;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-form {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .btn-danger {
+            background-color: var(--admin-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 60px;
+            border-radius: 50%;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--secondary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .admin-btn {
+            background-color: var(--admin-color);
+            color: var(--white);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .admin-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 250px);
+            padding: 2rem 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Homepage */
+       .hero {
+                background: linear-gradient(rgba(0, 0, 0, 0.5)), url('');
+                background-size: cover;
+                background-position: center;
+                color: var(--white);
+                padding: 5rem 0;
+                text-align: center;
+                border-radius: 10px;
+                margin-bottom: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .vision-mission {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+                background-color: var(--white);
+                border-radius: 10px;
+                padding: 1.5rem;
+                box-shadow: var(--shadow);
+                transition: var(--trasition);
+                position: relative;
+
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .admin-mode .edit-btn {
+            display: block;
+        }
+
+        .editable {
+            position: relative;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .admin-mode .editable:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .edit-form {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .edit-form.active {
+            display: block;
+        }
+
+        /* Image Upload */
+        .image-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .image-upload input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .upload-label {
+            display: none;
+            background-color: var(--admin-color);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .admin-mode .upload-label {
+            display: inline-block;
+        }
+
+        /* Majors Section */
+        .majors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .major-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .major-card:hover {
+            transform: scale(1.03);
+        }
+
+        .major-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .major-card-content {
+            padding: 1.5rem;
+        }
+
+        .major-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Teachers Section */
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .teacher-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .teacher-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 1rem auto;
+            border: 4px solid var(--primary-color);
+        }
+
+        .teacher-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .teacher-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+        }
+
+        /* Achievements Section */
+        .achievement-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .achievements-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .achievement-card .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* PPDB Forum Section */
+        .ppdb-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .ppdb-list {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .ppdb-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .ppdb-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .ppdb-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ppdb-item:last-child {
+            border-bottom: none;
+        }
+
+        .ppdb-item .name {
+            font-weight: 500;
+        }
+
+        .ppdb-item .date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Create Form */
+        .create-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-only {
+            display: none;
+        }
+
+        .admin-mode .admin-only {
+            display: block;
+        }
+
+        /* Chatbot */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .chatbot-toggle {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .chatbot-toggle:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-body {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .chatbot-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .chatbot-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .chatbot-input button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chatbot-message {
+            margin-bottom: 1rem;
+            display: flex;
+        }
+
+        .chatbot-message.user {
+            justify-content: flex-end;
+        }
+
+        .chatbot-message-content {
+            max-width: 70%;
+            padding: 0.8rem;
+            border-radius: 10px;
+        }
+
+        .chatbot-message.user .chatbot-message-content {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .chatbot-message.bot .chatbot-message-content {
+            background-color: #e9ecef;
+        }
+
+        .quick-action {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 2rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 9999;
+            display: none;
+        }
+
+        /* User info */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .chatbot-window {
+                width: 300px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div class="login-modal" id="login-modal">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-type">Login Sebagai</label>
+                    <select id="user-type" required>
+                        <option value="admin">Admin</option>
+                        <option value="peserta">Peserta</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="image-upload">
+                        <img id="logo-img" src="https://picsum.photos/seed/logo/60/60.jpg" alt="SMK Islam Krembung Logo">
+                        <label for="logo-upload" class="upload-label">Ganti Logo</label>
+                        <input type="file" id="logo-upload" accept="image/*">
+                    </div>
+                    <h1>SMK Islam Krembung</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-section="home">Beranda</a></li>
+                        <li><a href="#" class="nav-link" data-section="extracurricular">Ekstrakurikuler</a></li>
+                        <li><a href="#" class="nav-link" data-section="majors">Jurusan</a></li>
+                        <li><a href="#" class="nav-link" data-section="teachers">Guru</a></li>
+                        <li><a href="#" class="nav-link" data-section="achievements">Prestasi</a></li>
+                        <li><a href="#" class="nav-link" data-section="ppdb">PPDB</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+                    <div class="user-info" id="user-info" style="display: none;">
+                        <i class="fas fa-user"></i>
+                        <span id="user-name">User</span>
+                    </div>
+                    <button class="admin-btn" id="login-btn">Login</button>
+                    <button class="admin-btn" id="admin-toggle" style="display:none;">Admin Mode</button>
+                    <button class="admin-btn" id="logout-btn" style="display:none;">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Homepage Section -->
+            <section id="home" class="section active">
+                <div class="hero">
+                    <div class="image-upload">
+                        <img id="hero-img" src="https://picsum.photos/seed/school/1200/600.jpg" alt="SMK Islam Krembung">
+                        <label for="hero-upload" class="upload-label">Ganti Gambar</label>
+                        <input type="file" id="hero-upload" accept="image/*">
+                    </div>
+                    <h2>Selamat Datang di SMK Islam Krembung</h2>
+                    <p class="editable" id="school-description">SMK Islam Krembung adalah lembaga pendidikan menengah kejuruan yang berkomitmen untuk menghasilkan lulusan yang berkualitas, beriman, dan berakhlak mulia. Kami menyediakan berbagai program keahlian yang relevan dengan kebutuhan industri dan dunia kerja.</p>
+                    <p class="editable" id="principal-name">Kepala Sekolah: Rudy Haryanto M.p M.pd</p>
+                    <button class="edit-btn" onclick="toggleEditForm('school-description')"><i class="fas fa-edit"></i></button>
+                    <button class="edit-btn" onclick="toggleEditForm('principal-name')"><i class="fas fa-edit"></i></button>
+                </div>
+
+                <div class="vision-mission">
+                    <div class="card">
+                        <h3><i class="fas fa-eye"></i> Visi</h3>
+                        <p class="editable" id="vision-text">Terwujudnya peserta didik yang beriman, bertaqwa, cerdas, terampil, mandiri, dan berwawasan global berlandaskan nilai-nilai Islam.</p>
+                        <button class="edit-btn" onclick="toggleEditForm('vision-text')"><i class="fas fa-edit"></i></button>
+                        <div class="edit-form" id="vision-text-form">
+                            <textarea id="vision-text-input" rows="4" style="width: 100%; padding: 0.5rem;"></textarea>
+                            <button class="btn" onclick="saveEdit('vision-text')">Simpan</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-bullseye"></i> Misi</h3>
+                        <ul class="editable" id="mission-text">
+                            <li>Menyelenggarakan pendidikan dan pengajaran yang berkualitas dengan pendekatan berbasis kompetensi.</li>
+                            <li>Mengembangkan potensi peserta didik melalui kegiatan ekstrakurikuler yang beragam.</li>
+                            <li>Membangun karakter peserta didik yang berlandaskan nilai-nilai Islam.</li>
+                            <li>Meningkatkan kualitas sarana dan prasarana pendidikan.</li>
+                            <li>Meningkatkan kerjasama dengan dunia industri dan masyarakat.</li>
+                        </ul>
+                        <button class="edit-btn" onclick="toggleEditForm('mission-text')"><i class="fas fa-edit"></i></button>
+                        <div class="edit-form" id="mission-text-form">
+                            <textarea id="mission-text-input" rows="6" style="width: 100%; padding: 0.5rem;"></textarea>
+                            <button class="btn" onclick="saveEdit('mission-text')">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Extracurricular Section -->
+            <section id="extracurricular" class="section">
+                <h2 class="section-title">Ekstrakurikuler</h2>
+
+                <div class="create-form admin-only" id="extracurricular-create-form">
+                    <h3>Tambah Ekstrakurikuler Baru</h3>
+                    <form id="extracurricular-create">
+                        <div class="form-group">
+                            <label for="new-extracurricular-title">Nama Ekstrakurikuler</label>
+                            <input type="text" id="new-extracurricular-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-extracurricular-desc">Deskripsi</label>
+                            <textarea id="new-extracurricular-desc" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-extracurricular-image">Gambar</label>
+                            <input type="file" id="new-extracurricular-image" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn">Tambah Ekstrakurikuler</button>
+                    </form>
+                </div>
+
+                <p class="editable" id="extracurricular-description">Berikut adalah berbagai kegiatan ekstrakurikuler yang tersedia di SMK Islam Krembung:</p>
+                <button class="edit-btn" onclick="toggleEditForm('extracurricular-description')"><i class="fas fa-edit"></i></button>
+
+                <div class="majors-grid" id="extracurricular-grid">
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="extracurricular-img" src="https://picsum.photos/seed/pramuka/300/180.jpg" alt="Pramuka">
+                            <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                            <input type="file" class="extracurricular-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable extracurricular-title">Pramuka</h3>
+                            <p class="editable extracurricular-desc">Kegiatan kepramukaan untuk mengembangkan karakter kepemimpinan, kemandirian, dan kepedulian sosial.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('pramuka-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('pramuka-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="extracurricular-img" src="https://picsum.photos/seed/olahraga/300/180.jpg" alt="Olahraga">
+                            <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                            <input type="file" class="extracurricular-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable extracurricular-title">Olahraga</h3>
+                            <p class="editable extracurricular-desc">Berbagai cabang olahraga seperti futsal, bola voli, bulu tangkis, dan atletik untuk menjaga kesehatan dan kebugaran.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('olahraga-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('olahraga-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="extracurricular-img" src="https://picsum.photos/seed/seni/300/180.jpg" alt="Seni dan Budaya">
+                            <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                            <input type="file" class="extracurricular-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable extracurricular-title">Seni dan Budaya</h3>
+                            <p class="editable extracurricular-desc">Kegiatan seni seperti tari, musik, teater, dan kaligrafi untuk mengembangkan bakat seni siswa.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('seni-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('seni-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="extracurricular-img" src="https://picsum.photos/seed/rohis/300/180.jpg" alt="Rohis">
+                            <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                            <input type="file" class="extracurricular-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable extracurricular-title">Rohis (Rohani Islam)</h3>
+                            <p class="editable extracurricular-desc">Kegiatan keagamaan untuk memperdalam pemahaman Islam dan mengamalkannya dalam kehidupan sehari-hari.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('rohis-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('rohis-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="extracurricular-img" src="https://picsum.photos/seed/paskibra/300/180.jpg" alt="Paskibra">
+                            <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                            <input type="file" class="extracurricular-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable extracurricular-title">Paskibra</h3>
+                            <p class="editable extracurricular-desc">Kegiatan pengibaran bendera untuk menumbuhkan rasa cinta tanah air dan disiplin.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('paskibra-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('paskibra-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="extracurricular-img" src="https://picsum.photos/seed/pmrs/300/180.jpg" alt="PMR">
+                            <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                            <input type="file" class="extracurricular-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable extracurricular-title">PMR (Palang Merah Remaja)</h3>
+                            <p class="editable extracurricular-desc">Kegiatan kemanusiaan untuk melatih keterampilan pertolongan pertama dan kepedulian sosial.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('pmr-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('pmr-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Majors Section -->
+            <section id="majors" class="section">
+                <h2 class="section-title">Jurusan di SMK Islam Krembung</h2>
+
+                <div class="create-form admin-only" id="major-create-form">
+                    <h3>Tambah Jurusan Baru</h3>
+                    <form id="major-create">
+                        <div class="form-group">
+                            <label for="new-major-title">Nama Jurusan</label>
+                            <input type="text" id="new-major-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-major-desc">Deskripsi</label>
+                            <textarea id="new-major-desc" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-major-image">Gambar</label>
+                            <input type="file" id="new-major-image" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn">Tambah Jurusan</button>
+                    </form>
+                </div>
+
+                <div class="majors-grid" id="majors-grid">
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="major-img" src="https://picsum.photos/seed/tkj/300/180.jpg" alt="Teknik Komputer dan Jaringan">
+                            <label class="upload-label major-upload-label">Ganti Gambar</label>
+                            <input type="file" class="major-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable major-title">Teknik Komputer dan Jaringan (TKJ)</h3>
+                            <p class="editable major-desc">Mempelajari perakitan komputer, instalasi jaringan, troubleshooting hardware dan software, serta administrasi server.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('tkj-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('tkj-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'major')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="major-img" src="https://picsum.photos/seed/mp/300/180.jpg" alt="Manajemen Perkantoran">
+                            <label class="upload-label major-upload-label">Ganti Gambar</label>
+                            <input type="file" class="major-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable major-title">Manajemen Perkantoran (MP)</h3>
+                            <p class="editable major-desc">Mempelajari administrasi perkantoran, kearsipan, manajemen informasi, dan aplikasi perkantoran.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('mp-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('mp-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'major')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="major-img" src="https://picsum.photos/seed/tp/300/180.jpg" alt="Teknik Pemesinan">
+                            <label class="upload-label major-upload-label">Ganti Gambar</label>
+                            <input type="file" class="major-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable major-title">Teknik Pemesinan (TP)</h3>
+                            <p class="editable major-desc">Mempelajari teknik produksi mesin, gambar teknik, proses pemesinan konvensional dan CNC.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('tp-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('tp-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'major')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="major-img" src="https://picsum.photos/seed/titl/300/180.jpg" alt="Teknik Instalasi Tenaga Listrik">
+                            <label class="upload-label major-upload-label">Ganti Gambar</label>
+                            <input type="file" class="major-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable major-title">Teknik Instalasi Tenaga Listrik (TITL)</h3>
+                            <p class="editable major-desc">Mempelajari instalasi listrik, penerangan, tenaga listrik, dan kontrol otomasi industri.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('titl-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('titl-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'major')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="major-card">
+                        <div class="image-upload">
+                            <img class="major-img" src="https://picsum.photos/seed/tsm/300/180.jpg" alt="Teknik Sepeda Motor">
+                            <label class="upload-label major-upload-label">Ganti Gambar</label>
+                            <input type="file" class="major-upload" accept="image/*">
+                        </div>
+                        <div class="major-card-content">
+                            <h3 class="editable major-title">Teknik Sepeda Motor (TSM)</h3>
+                            <p class="editable major-desc">Mempelajari sistem kerja sepeda motor, perawatan, perbaikan, dan modifikasi sepeda motor.</p>
+                            <button class="edit-btn" onclick="toggleEditForm('tsm-title')"><i class="fas fa-edit"></i></button>
+                            <button class="edit-btn" onclick="toggleEditForm('tsm-desc')"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn admin-only" onclick="deleteItem(this, 'major')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teachers Section -->
+            <section id="teachers" class="section">
+                <h2 class="section-title">Daftar Guru</h2>
+
+                <div class="create-form admin-only" id="teacher-create-form">
+                    <h3>Tambah Guru Baru</h3>
+                    <form id="teacher-create">
+                        <div class="form-group">
+                            <label for="new-teacher-name">Nama Guru</label>
+                            <input type="text" id="new-teacher-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-teacher-position">Jabatan</label>
+                            <input type="text" id="new-teacher-position" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-teacher-expertise">Keahlian</label>
+                            <input type="text" id="new-teacher-expertise" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-teacher-image">Foto</label>
+                            <input type="file" id="new-teacher-image" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn">Tambah Guru</button>
+                    </form>
+                </div>
+
+                <div class="teachers-grid" id="teachers-grid">
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher1/150/150.jpg" alt="Guru 1">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Rudy Haryanto, M.p M.pd</h3>
+                        <p class="editable teacher-position">Kepala Sekolah</p>
+                        <div>
+                            <span class="teacher-badge"></span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher1-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher1-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher2/150/150.jpg" alt="Guru 2">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Anisa Dwi Susanti, M.pd</h3>
+                        <p class="editable teacher-position">Guru Agama Islam</p>
+                        <div>
+                            <span class="teacher-badge">Keagamaan</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher2-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher2-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher3/150/150.jpg" alt="Guru 3">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Syarif Hidayat, S.Kom</h3>
+                        <p class="editable teacher-position">Guru Produktif TKJ</p>
+                        <div>
+                            <span class="teacher-badge">TKJ</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher3-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher3-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher4/150/150.jpg" alt="Guru 4">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Ayulies Sugeng Nurcahyono, S.Kom</h3>
+                        <p class="editable teacher-position">Guru Produktif TKJ</p>
+                        <div>
+                            <span class="teacher-badge">TKJ</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher4-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher4-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher5/150/150.jpg" alt="Guru 5">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Muhammad Tanwirul Firdaus, S.pd</h3>
+                        <p class="editable teacher-position">Guru Produktif TKJ</p>
+                        <div>
+                            <span class="teacher-badge">TKJ</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher5-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher5-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher6/150/150.jpg" alt="Guru 6">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Muhammad Ihda Rizqi Syahri Romadloni, S.pd</h3>
+                        <p class="editable teacher-position">Guru PKKWU</p>
+                        <div>
+                            <span class="teacher-badge">PKKWU</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher6-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher6-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher7/150/150.jpg" alt="Guru 7">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Nur Diana, M.pd</h3>
+                        <p class="editable teacher-position">Guru Matematika</p>
+                        <div>
+                            <span class="teacher-badge">Matematika</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher7-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher7-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                    <div class="teacher-card">
+                        <div class="image-upload">
+                            <img class="teacher-img" src="https://picsum.photos/seed/teacher8/150/150.jpg" alt="Guru 8">
+                            <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                            <input type="file" class="teacher-upload" accept="image/*">
+                        </div>
+                        <h3 class="editable teacher-name">Afriliyani, S.pd</h3>
+                        <p class="editable teacher-position">Guru Bahasa Indonesia</p>
+                        <div>
+                            <span class="teacher-badge">Bahasa Indonesia</span>
+                        </div>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher8-name')"><i class="fas fa-edit"></i></button>
+                        <button class="edit-btn" onclick="toggleEditForm('teacher8-position')"><i class="fas fa-edit"></i></button>
+                        <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section id="achievements" class="section">
+                <h2 class="section-title">Prestasi Non-Akademik</h2>
+
+                <div class="achievement-form admin-only" id="achievement-form-container">
+                    <h3>Tambah Prestasi Baru</h3>
+                    <form id="achievement-form">
+                        <div class="form-group">
+                            <label for="achievement-title">Judul Prestasi</label>
+                            <input type="text" id="achievement-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="achievement-description">Deskripsi</label>
+                            <textarea id="achievement-description" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="achievement-student">Nama Siswa</label>
+                            <input type="text" id="achievement-student" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="achievement-date">Tanggal</label>
+                            <input type="date" id="achievement-date" required>
+                        </div>
+                        <button type="submit" class="btn">Tambah Prestasi</button>
+                    </form>
+                </div>
+
+                <div class="achievements-list" id="achievements-list">
+                    <div class="achievement-card">
+                        <button class="delete-btn admin-only" onclick="deleteAchievement(this)"><i class="fas fa-times"></i></button>
+                        <h3>Juara Harapan 2 Cipta Jingle Rohis</h3>
+                        <p>Siswi kami berhasil meraih Juara Harapan 2 dalam lomba Cipta Jingle Rohis yang diadakan di Ancol, Jakarta Utara.</p>
+                        <p><strong>Peserta:</strong> Nizar Winda Davina</p>
+                        <p><strong>Peserta:</strong> Cahaya Rohamatan Lil Alamin</p>
+                        <p><strong>Peserta:</strong> Devi Aulya Putri</p>
+                   </div>
+                </div>
+            </section>
+
+            <!-- PPDB Forum Section -->
+            <section id="ppdb" class="section">
+                <h2 class="section-title">Forum PPDB</h2>
+
+                <div class="ppdb-form" id="ppdb-form-container">
+                    <h3>Daftar PPDB</h3>
+                    <form id="ppdb-form">
+                        <div class="form-group">
+                            <label for="student-name">Nama Siswa</label>
+                            <input type="text" id="student-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="student-major">Jurusan Pilihan</label>
+                            <select id="student-major" required>
+                                <option value="">Pilih Jurusan</option>
+                                <option value="tkj">Teknik Komputer dan Jaringan</option>
+                                <option value="mp">Manajemen Perkantoran</option>
+                                <option value="tp">Teknik Pemesinan</option>
+                                <option value="titl">Teknik Instalasi Tenaga Listrik</option>
+                                <option value="tsm">Teknik Sepeda Motor</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Daftar</button>
+                    </form>
+                </div>
+
+                <div class="ppdb-list">
+                    <div class="ppdb-category" id="tkj-category">
+                        <h3>Teknik Komputer dan Jaringan (TKJ)</h3>
+                        <div class="ppdb-items">
+                            <div class="ppdb-item">
+                                <span class="name">Achmad Alif Al-Fajri</span>
+                                <span class="date">15 Juni 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ppdb-category" id="mp-category">
+                        <h3>Manajemen Perkantoran (MP)</h3>
+                        <div class="ppdb-items">
+                            <div class="ppdb-item">
+                                <span class="name">Siti Nurhaliza</span>
+                                <span class="date">16 Juni 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ppdb-category" id="tp-category">
+                        <h3>Teknik Pemesinan (TP)</h3>
+                        <div class="ppdb-items">
+                            <div class="ppdb-item">
+                                <span class="name">Muhammad Fadli</span>
+                                <span class="date">17 Juni 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ppdb-category" id="titl-category">
+                        <h3>Teknik Instalasi Tenaga Listrik (TITL)</h3>
+                        <div class="ppdb-items">
+                            <div class="ppdb-item">
+                                <span class="name">Budi Santoso</span>
+                                <span class="date">18 Juni 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ppdb-category" id="tsm-category">
+                        <h3>Teknik Sepeda Motor (TSM)</h3>
+                        <div class="ppdb-items">
+                            <div class="ppdb-item">
+                                <span class="name">Eko Prasetyo</span>
+                                <span class="date">19 Juni 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Chatbot -->
+    <div class="chatbot">
+        <button class="chatbot-toggle" id="chatbot-toggle">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chatbot-window" id="chatbot-window">
+            <div class="chatbot-header">
+                <h3>Asisten Navigasi</h3>
+                <button id="chatbot-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="chatbot-body" id="chatbot-body">
+                <div class="chatbot-message bot">
+                    <div class="chatbot-message-content">
+                        Halo! Saya adalah asisten navigasi. Ada yang bisa saya bantu?
+                    </div>
+                </div>
+                <div class="chatbot-message bot">
+                    <div class="chatbot-message-content">
+                        Anda bisa mengklik tombol cepat di bawah untuk langsung menuju halaman yang Anda inginkan:
+                    </div>
+                </div>
+                <div class="chatbot-message bot">
+                    <div class="chatbot-message-content">
+                        <span class="quick-action" onclick="navigateToSection('home')">Beranda</span>
+                        <span class="quick-action" onclick="navigateToSection('extracurricular')">Ekstrakurikuler</span>
+                        <span class="quick-action" onclick="navigateToSection('majors')">Jurusan</span>
+                        <span class="quick-action" onclick="navigateToSection('teachers')">Guru</span>
+                        <span class="quick-action" onclick="navigateToSection('achievements')">Prestasi</span>
+                        <span class="quick-action" onclick="navigateToSection('ppdb')">Forum PPDB</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-footer">
+                <div class="chatbot-input">
+                    <input type="text" id="chatbot-input" placeholder="Ketik pertanyaan Anda...">
+                    <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Kontak Kami</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl.Raya Rejeni, Pakem, Rejeni, Kec. Krembung,Kabupaten Sidoarjo</p>
+                    <p><i class="fas fa-phone"></i> (031) 8856988</p>
+                    <p><i class="fas fa-envelope"></i> info@smkislamkrembung.sch.id</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Jam Operasional</h3>
+                    <p>Senin - Kamis: 07:00 - 14:00</p>
+                    <p>Jumat: 07:00 - 11:00</p>
+                    <p>Sabtu: 07:00 - 11:30</p>
+                    <p>Minggu: Tutup</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Media Sosial</h3>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/smkislamkrembung/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@smk.islam.krembung" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.youtube.com/channel/UCJtGA5MydCN5B1YRiLIDlEg" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SMK Islam Krembung. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Login functionality
+            const loginModal = document.getElementById('login-modal');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const adminToggle = document.getElementById('admin-toggle');
+            const loginForm = document.getElementById('login-form');
+            const userInfo = document.getElementById('user-info');
+            const userName = document.getElementById('user-name');
+
+            // Check if user is already logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userType = localStorage.getItem('userType');
+            const username = localStorage.getItem('username');
+
+            if (isLoggedIn === 'true') {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                userInfo.style.display = 'flex';
+                userName.textContent = username;
+
+                if (userType === 'admin') {
+                    adminToggle.style.display = 'block';
+                    document.body.classList.add('admin-mode');
+                    adminToggle.textContent = 'Exit Admin Mode';
+                    adminToggle.style.backgroundColor = '#c0392b';
+
+                    // Show admin-only elements
+                    document.querySelectorAll('.admin-only').forEach(el => {
+                        el.style.display = 'block';
+                    });
+                }
+
+                // Check if user has already registered for PPDB
+                if (userType === 'peserta' && localStorage.getItem(`ppdb_registered_${username}`) === 'true') {
+                    document.getElementById('ppdb-form-container').style.display = 'none';
+                    showNotification('Anda sudah terdaftar di PPDB.');
+                }
+            }
+
+            loginBtn.addEventListener('click', function() {
+                loginModal.classList.add('active');
+            });
+
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                }
+            });
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const userType = document.getElementById('user-type').value;
+
+                // Simple authentication (in real app, this would be server-side)
+                if (userType === 'admin' && username === 'admin' && password === 'admin123') {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userType', 'admin');
+                    localStorage.setItem('username', username);
+
+                    loginModal.classList.remove('active');
+                    loginBtn.style.display = 'none';
+                    logoutBtn.style.display = 'block';
+                    userInfo.style.display = 'flex';
+                    userName.textContent = username;
+                    adminToggle.style.display = 'block';
+                    document.body.classList.add('admin-mode');
+                    adminToggle.textContent = 'Exit Admin Mode';
+                    adminToggle.style.backgroundColor = '#c0392b';
+
+                    // Show admin-only elements
+                    document.querySelectorAll('.admin-only').forEach(el => {
+                        el.style.display = 'block';
+                    });
+
+                    showNotification('Login berhasil! Selamat datang, Admin.');
+
+                    // Reset form
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                } else if (userType === 'peserta' && username !== '' && password !== '') {
+                    // Check if peserta has already registered for PPDB
+                    const hasRegistered = localStorage.getItem(`ppdb_registered_${username}`);
+
+                    if (hasRegistered === 'true') {
+                        showNotification('Anda sudah terdaftar di PPDB. Setiap peserta hanya dapat mendaftar sekali saja.');
+                        return;
+                    }
+
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userType', 'peserta');
+                    localStorage.setItem('username', username);
+
+                    loginModal.classList.remove('active');
+                    loginBtn.style.display = 'none';
+                    logoutBtn.style.display = 'block';
+                    userInfo.style.display = 'flex';
+                    userName.textContent = username;
+
+                    showNotification('Login berhasil! Selamat datang, ' + username + '.');
+
+                    // Reset form
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                } else {
+                    showNotification('Username atau password salah!');
+                }
+            });
+
+            logoutBtn.addEventListener('click', function() {
+                localStorage.setItem('isLoggedIn', 'false');
+                localStorage.removeItem('userType');
+                localStorage.removeItem('username');
+
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                userInfo.style.display = 'none';
+                adminToggle.style.display = 'none';
+                document.body.classList.remove('admin-mode');
+
+                // Hide admin-only elements
+                document.querySelectorAll('.admin-only').forEach(el => {
+                    el.style.display = 'none';
+                });
+
+                showNotification('Anda telah logout.');
+            });
+
+            // Admin mode toggle
+            adminToggle.addEventListener('click', function() {
+                document.body.classList.toggle('admin-mode');
+                if (document.body.classList.contains('admin-mode')) {
+                    this.textContent = 'Exit Admin Mode';
+                    this.style.backgroundColor = '#c0392b';
+                    showNotification('Admin mode diaktifkan. Anda sekarang dapat mengedit konten.');
+
+                    // Show admin-only elements
+                    document.querySelectorAll('.admin-only').forEach(el => {
+                        el.style.display = 'block';
+                    });
+                } else {
+                    this.textContent = 'Admin Mode';
+                    this.style.backgroundColor = '';
+                    showNotification('Admin mode dinonaktifkan.');
+
+                    // Hide admin-only elements
+                    document.querySelectorAll('.admin-only').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                }
+            });
+
+            // Navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Remove active class from all links and sections
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+
+                    // Add active class to clicked link
+                    this.classList.add('active');
+
+                    // Show corresponding section
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            themeToggle.addEventListener('click', function() {
+                if (body.getAttribute('data-theme') === 'dark') {
+                    body.removeAttribute('data-theme');
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Image upload functionality
+            const imageUploads = document.querySelectorAll('input[type="file"]');
+            imageUploads.forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        const imgId = input.id.replace('-upload', '-img');
+                        const img = document.getElementById(imgId);
+
+                        if (img) {
+                            img.src = event.target.result;
+                            // Save to localStorage
+                            localStorage.setItem(imgId, event.target.result);
+                        } else {
+                            // Handle class-based images
+                            const imgClass = input.className.replace('-upload', '-img');
+                            const imgs = document.querySelectorAll('.' + imgClass);
+                            imgs.forEach(img => {
+                                img.src = event.target.result;
+                            });
+                        }
+                    }
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+
+            // Load saved images from localStorage
+            const savedImages = ['logo-img', 'hero-img'];
+
+            savedImages.forEach(imgId => {
+                const savedImg = localStorage.getItem(imgId);
+                if (savedImg) {
+                    const img = document.getElementById(imgId);
+                    if (img) {
+                        img.src = savedImg;
+                    }
+                }
+            });
+
+            // Achievement form
+            const achievementForm = document.getElementById('achievement-form');
+            const achievementFormContainer = document.getElementById('achievement-form-container');
+
+            // Hide achievement form if not admin
+            if (localStorage.getItem('userType') !== 'admin') {
+                achievementFormContainer.style.display = 'none';
+            }
+
+            achievementForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const title = document.getElementById('achievement-title').value;
+                const description = document.getElementById('achievement-description').value;
+                const student = document.getElementById('achievement-student').value;
+                const date = document.getElementById('achievement-date').value;
+
+                const achievementCard = document.createElement('div');
+                achievementCard.className = 'achievement-card';
+                achievementCard.innerHTML = `
+                    <button class="delete-btn admin-only" onclick="deleteAchievement(this)"><i class="fas fa-times"></i></button>
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                    <p><strong>Peserta:</strong> ${student}</p>
+                    <p><strong>Tanggal:</strong> ${formatDate(date)}</p>
+                `;
+
+                document.getElementById('achievements-list').appendChild(achievementCard);
+
+                // Reset form
+                achievementForm.reset();
+
+                // Show success message
+                showNotification('Prestasi berhasil ditambahkan!');
+            });
+
+            // PPDB form
+            const ppdbForm = document.getElementById('ppdb-form');
+            const ppdbFormContainer = document.getElementById('ppdb-form-container');
+
+            // Hide PPDB form if already registered
+            const currentUser = localStorage.getItem('username');
+            if (currentUser && localStorage.getItem(`ppdb_registered_${currentUser}`) === 'true') {
+                ppdbFormContainer.style.display = 'none';
+                showNotification('Anda sudah terdaftar di PPDB.');
+            }
+
+            ppdbForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('student-name').value;
+                const major = document.getElementById('student-major').value;
+                const date = new Date().toLocaleDateString('id-ID');
+
+                // Mark as registered
+                localStorage.setItem(`ppdb_registered_${currentUser}`, 'true');
+
+                const ppdbItem = document.createElement('div');
+                ppdbItem.className = 'ppdb-item';
+                ppdbItem.innerHTML = `
+                    <span class="name">${name}</span>
+                    <span class="date">${date}</span>
+                `;
+
+                // Add to the appropriate category
+                const category = document.getElementById(`${major}-category`);
+                const itemsContainer = category.querySelector('.ppdb-items');
+                itemsContainer.appendChild(ppdbItem);
+
+                // Hide form after submission
+                ppdbFormContainer.style.display = 'none';
+
+                // Show success message
+                showNotification('Pendaftaran berhasil! Anda sudah terdaftar di PPDB.');
+            });
+
+            // Create forms for extracurricular, majors, and teachers
+            const extracurricularCreateForm = document.getElementById('extracurricular-create');
+            const majorCreateForm = document.getElementById('major-create');
+            const teacherCreateForm = document.getElementById('teacher-create');
+
+            extracurricularCreateForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const title = document.getElementById('new-extracurricular-title').value;
+                const desc = document.getElementById('new-extracurricular-desc').value;
+                const imageFile = document.getElementById('new-extracurricular-image').files[0];
+
+                let imageSrc = `https://picsum.photos/seed/${title.replace(/\s+/g, '-').toLowerCase()}/300/180.jpg`;
+
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        imageSrc = event.target.result;
+                        createExtracurricularCard(title, desc, imageSrc);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    createExtracurricularCard(title, desc, imageSrc);
+                }
+
+                // Reset form
+                extracurricularCreateForm.reset();
+
+                // Show success message
+                showNotification('Ekstrakurikuler berhasil ditambahkan!');
+            });
+
+            majorCreateForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const title = document.getElementById('new-major-title').value;
+                const desc = document.getElementById('new-major-desc').value;
+                const imageFile = document.getElementById('new-major-image').files[0];
+
+                let imageSrc = `https://picsum.photos/seed/${title.replace(/\s+/g, '-').toLowerCase()}/300/180.jpg`;
+
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        imageSrc = event.target.result;
+                        createMajorCard(title, desc, imageSrc);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    createMajorCard(title, desc, imageSrc);
+                }
+
+                // Reset form
+                majorCreateForm.reset();
+
+                // Show success message
+                showNotification('Jurusan berhasil ditambahkan!');
+            });
+
+            teacherCreateForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('new-teacher-name').value;
+                const position = document.getElementById('new-teacher-position').value;
+                const expertise = document.getElementById('new-teacher-expertise').value;
+                const imageFile = document.getElementById('new-teacher-image').files[0];
+
+                let imageSrc = `https://picsum.photos/seed/${name.replace(/\s+/g, '-').toLowerCase()}/150/150.jpg`;
+
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        imageSrc = event.target.result;
+                        createTeacherCard(name, position, expertise, imageSrc);
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    createTeacherCard(name, position, expertise, imageSrc);
+                }
+
+                // Reset form
+                teacherCreateForm.reset();
+
+                // Show success message
+                showNotification('Guru berhasil ditambahkan!');
+            });
+
+            // Chatbot
+            const chatbotToggle = document.getElementById('chatbot-toggle');
+            const chatbotWindow = document.getElementById('chatbot-window');
+            const chatbotClose = document.getElementById('chatbot-close');
+            const chatbotInput = document.getElementById('chatbot-input');
+            const chatbotSend = document.getElementById('chatbot-send');
+            const chatbotBody = document.getElementById('chatbot-body');
+
+            chatbotToggle.addEventListener('click', function() {
+                chatbotWindow.classList.toggle('active');
+            });
+
+            chatbotClose.addEventListener('click', function() {
+                chatbotWindow.classList.remove('active');
+            });
+
+            function sendChatbotMessage() {
+                const message = chatbotInput.value.trim();
+                if (message === '') return;
+
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'chatbot-message user';
+                userMessage.innerHTML = `<div class="chatbot-message-content">${message}</div>`;
+                chatbotBody.appendChild(userMessage);
+
+                // Clear input
+                chatbotInput.value = '';
+
+                // Simulate chatbot response
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'chatbot-message bot';
+
+                    // Simple response logic
+                    let response = '';
+                    const lowerMessage = message.toLowerCase();
+
+                    if (lowerMessage.includes('jurusan') || lowerMessage.includes('program')) {
+                        response = 'Untuk informasi jurusan, saya akan memindahkan Anda ke halaman Jurusan. SMK Islam Krembung memiliki 5 jurusan: TKJ, MP, TP, TITL, dan TSM.';
+                        setTimeout(() => navigateToSection('majors'), 1500);
+                    } else if (lowerMessage.includes('guru') || lowerMessage.includes('pengajar')) {
+                        response = 'Saya akan memindahkan Anda ke halaman Guru untuk melihat informasi lengkap tentang guru dan staf pengajar.';
+                        setTimeout(() => navigateToSection('teachers'), 1500);
+                    } else if (lowerMessage.includes('prestasi')) {
+                        response = 'Saya akan memindahkan Anda ke halaman Prestasi untuk melihat daftar prestasi non-akademik siswa.';
+                        setTimeout(() => navigateToSection('achievements'), 1500);
+                    } else if (lowerMessage.includes('ppdb') || lowerMessage.includes('pendaftaran')) {
+                        response = 'Saya akan memindahkan Anda ke halaman Forum PPDB untuk informasi pendaftaran dan daftar peserta.';
+                        setTimeout(() => navigateToSection('ppdb'), 1500);
+                    } else if (lowerMessage.includes('ekstrakurikuler') || lowerMessage.includes('kegiatan')) {
+                        response = 'Saya akan memindahkan Anda ke halaman Ekstrakurikuler untuk melihat berbagai kegiatan di SMK Islam Krembung.';
+                        setTimeout(() => navigateToSection('extracurricular'), 1500);
+                    } else if (lowerMessage.includes('beranda') || lowerMessage.includes('home')) {
+                        response = 'Saya akan memindahkan Anda ke halaman Beranda.';
+                        setTimeout(() => navigateToSection('home'), 1500);
+                    } else if (lowerMessage.includes('bantuan') || lowerMessage.includes('help')) {
+                        response = 'Saya siap membantu Anda menavigasi website SMK Islam Krembung. Anda bisa bertanya tentang jurusan, guru, prestasi, PPDB, ekstrakurikuler, atau beranda. Atau gunakan tombol cepat untuk langsung menuju halaman yang Anda inginkan.';
+                    } else {
+                        response = 'Maaf, saya tidak sepenuhnya memahami pertanyaan Anda. Saya di sini untuk membantu navigasi website. Anda bisa bertanya tentang jurusan, guru, prestasi, PPDB, ekstrakurikuler, atau beranda. Atau gunakan tombol cepat untuk langsung menuju halaman yang Anda inginkan.';
+                    }
+
+                    botMessage.innerHTML = `<div class="chatbot-message-content">${response}</div>`;
+                    chatbotBody.appendChild(botMessage);
+
+                    // Scroll to bottom
+                    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+                }, 1000);
+
+                // Scroll to bottom
+                chatbotBody.scrollTop = chatbotBody.scrollHeight;
+            }
+
+            chatbotSend.addEventListener('click', sendChatbotMessage);
+            chatbotInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatbotMessage();
+                }
+            });
+        });
+
+        // Helper functions
+        function deleteAchievement(btn) {
+            if (confirm('Apakah Anda yakin ingin menghapus prestasi ini?')) {
+                btn.parentElement.remove();
+                showNotification('Prestasi berhasil dihapus!');
+            }
+        }
+
+        function deleteItem(btn, type) {
+            if (confirm(`Apakah Anda yakin ingin menghapus ${type} ini?`)) {
+                btn.closest('.major-card, .teacher-card').remove();
+                showNotification(`${type.charAt(0).toUpperCase() + type.slice(1)} berhasil dihapus!`);
+            }
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        function navigateToSection(sectionId) {
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === sectionId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Update sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            // Close chatbot
+            document.getElementById('chatbot-window').classList.remove('active');
+        }
+
+        function toggleEditForm(elementId) {
+            const element = document.getElementById(elementId);
+            const formId = elementId + '-form';
+            const form = document.getElementById(formId);
+
+            if (form) {
+                // Toggle form visibility
+                if (form.classList.contains('active')) {
+                    form.classList.remove('active');
+                } else {
+                    // Set current value in form
+                    const inputId = elementId + '-input';
+                    const input = document.getElementById(inputId);
+
+                    if (element.tagName === 'UL') {
+                        // Handle list elements
+                        let listText = '';
+                        element.querySelectorAll('li').forEach(li => {
+                            listText += li.textContent + '\n';
+                        });
+                        input.value = listText.trim();
+                    } else {
+                        input.value = element.textContent;
+                    }
+
+                    form.classList.add('active');
+                }
+            }
+        }
+
+        function saveEdit(elementId) {
+            const element = document.getElementById(elementId);
+            const inputId = elementId + '-input';
+            const input = document.getElementById(inputId);
+            const formId = elementId + '-form';
+            const form = document.getElementById(formId);
+
+            if (element.tagName === 'UL') {
+                // Handle list elements
+                element.innerHTML = '';
+                input.value.split('\n').forEach(line => {
+                    if (line.trim() !== '') {
+                        const li = document.createElement('li');
+                        li.textContent = line.trim();
+                        element.appendChild(li);
+                    }
+                });
+            } else {
+                element.textContent = input.value;
+            }
+
+            // Save to localStorage
+            localStorage.setItem(elementId, element.textContent);
+
+            form.classList.remove('active');
+            showNotification('Perubahan berhasil disimpan!');
+        }
+
+        function createExtracurricularCard(title, desc, imageSrc) {
+            const card = document.createElement('div');
+            card.className = 'major-card';
+            card.innerHTML = `
+                <div class="image-upload">
+                    <img class="extracurricular-img" src="${imageSrc}" alt="${title}">
+                    <label class="upload-label extracurricular-upload-label">Ganti Gambar</label>
+                    <input type="file" class="extracurricular-upload" accept="image/*">
+                </div>
+                <div class="major-card-content">
+                    <h3 class="editable extracurricular-title">${title}</h3>
+                    <p class="editable extracurricular-desc">${desc}</p>
+                    <button class="edit-btn" onclick="toggleEditForm('${title.toLowerCase().replace(/\s+/g, '-')}-title')"><i class="fas fa-edit"></i></button>
+                    <button class="edit-btn" onclick="toggleEditForm('${title.toLowerCase().replace(/\s+/g, '-')}-desc')"><i class="fas fa-edit"></i></button>
+                    <button class="delete-btn admin-only" onclick="deleteItem(this, 'extracurricular')"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+
+            document.getElementById('extracurricular-grid').appendChild(card);
+
+            // Add event listeners to new upload inputs
+            const uploadInput = card.querySelector('.extracurricular-upload');
+            uploadInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    const img = card.querySelector('.extracurricular-img');
+                    img.src = event.target.result;
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function createMajorCard(title, desc, imageSrc) {
+            const card = document.createElement('div');
+            card.className = 'major-card';
+            card.innerHTML = `
+                <div class="image-upload">
+                    <img class="major-img" src="${imageSrc}" alt="${title}">
+                    <label class="upload-label major-upload-label">Ganti Gambar</label>
+                    <input type="file" class="major-upload" accept="image/*">
+                </div>
+                <div class="major-card-content">
+                    <h3 class="editable major-title">${title}</h3>
+                    <p class="editable major-desc">${desc}</p>
+                    <button class="edit-btn" onclick="toggleEditForm('${title.toLowerCase().replace(/\s+/g, '-')}-title')"><i class="fas fa-edit"></i></button>
+                    <button class="edit-btn" onclick="toggleEditForm('${title.toLowerCase().replace(/\s+/g, '-')}-desc')"><i class="fas fa-edit"></i></button>
+                    <button class="delete-btn admin-only" onclick="deleteItem(this, 'major')"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+
+            document.getElementById('majors-grid').appendChild(card);
+
+            // Add event listeners to new upload inputs
+            const uploadInput = card.querySelector('.major-upload');
+            uploadInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    const img = card.querySelector('.major-img');
+                    img.src = event.target.result;
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function createTeacherCard(name, position, expertise, imageSrc) {
+            const card = document.createElement('div');
+            card.className = 'teacher-card';
+
+            // Create expertise badges
+            const expertiseBadges = expertise.split(',').map(exp =>
+                `<span class="teacher-badge">${exp.trim()}</span>`
+            ).join('');
+
+            card.innerHTML = `
+                <div class="image-upload">
+                    <img class="teacher-img" src="${imageSrc}" alt="${name}">
+                    <label class="upload-label teacher-upload-label">Ganti Foto</label>
+                    <input type="file" class="teacher-upload" accept="image/*">
+                </div>
+                <h3 class="editable teacher-name">${name}</h3>
+                <p class="editable teacher-position">${position}</p>
+                <div>
+                    ${expertiseBadges}
+                </div>
+                <button class="edit-btn" onclick="toggleEditForm('${name.toLowerCase().replace(/\s+/g, '-')}-name')"><i class="fas fa-edit"></i></button>
+                <button class="edit-btn" onclick="toggleEditForm('${name.toLowerCase().replace(/\s+/g, '-')}-position')"><i class="fas fa-edit"></i></button>
+                <button class="delete-btn admin-only" onclick="deleteItem(this, 'teacher')"><i class="fas fa-trash"></i></button>
+            `;
+
+            document.getElementById('teachers-grid').appendChild(card);
+
+            // Add event listeners to new upload inputs
+            const uploadInput = card.querySelector('.teacher-upload');
+            uploadInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(event) {
+                    const img = card.querySelector('.teacher-img');
+                    img.src = event.target.result;
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Load saved text from localStorage
+        window.addEventListener('load', function() {
+            const editableElements = document.querySelectorAll('.editable');
+            editableElements.forEach(element => {
+                const savedText = localStorage.getItem(element.id);
+                if (savedText) {
+                    if (element.tagName === 'UL') {
+                        element.innerHTML = '';
+                        savedText.split('\n').forEach(line => {
+                            if (line.trim() !== '') {
+                                const li = document.createElement('li');
+                                li.textContent = line.trim();
+                                element.appendChild(li);
+                            }
+                        });
+                    } else {
+                        element.textContent = savedText;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
